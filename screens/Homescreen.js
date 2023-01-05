@@ -116,20 +116,42 @@ function Homescreen () {
     };
 
     return (
-        <FlatList 
-            data={data} 
-            renderItem={({item}) => (
-                <TouchableOpacity
-                onPress={() => handleOnPress(item.id, item.status)}
-                >
-                    <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{item.id}</Text>
-                    <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{item.status}</Text>
+        <View style={styles.container}>
+            <TouchableOpacity>
+                <Text style={styles.welcome}>
+                .
+                .
+                .
+                    </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text style={styles.welcome}>
+                    {data.length}
+                    </Text>
                 </TouchableOpacity>
-
-            )} 
-            keyExtractor={item => item.id.toString()} 
-        />
+            <FlatList 
+                data={data} 
+                renderItem={({item}) => (
+                    <TouchableOpacity
+                    onPress={() => handleOnPress(item.id, item.status)}
+                    style={styles.itemContainer}
+                    >
+                        <Text style={styles.itemText}>{item.id}</Text>
+                        <Text style={styles.itemText}>{item.status}</Text>
+                    </TouchableOpacity>
+    
+                )} 
+                keyExtractor={item => item.id.toString()}
+            />
+            <TouchableOpacity style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>Refresh List</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text></Text>
+            </TouchableOpacity>
+        </View>
     );
+    
 };
 
 export default () => {
@@ -140,23 +162,31 @@ export default () => {
     )
 }
 
-const styles= StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'#fff'
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
     },
-    welcomeText:{
-        marginTop:100,
-        fontSize:30,
-        fontWeight:'bold'
+    itemContainer: {
+        padding: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
+       
     },
-    Middle:{
-        alignItems:'center',
-        justifyContent:'center',
+    itemText: {
+        fontSize: 25,
+        fontWeight: 'bold'
     },
-    logoutButton:{
-        marginTop:30,
-        marginLeft:15,
-        marginRight:15,
+    buttonContainer: {
+        marginTop: 20,
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+        justifyContent: 'center'
+    },
+    buttonText: {
+        fontSize: 20,
+        color: 'white'
     }
-})
+});
+

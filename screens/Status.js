@@ -22,7 +22,7 @@ function StatusScreen({ route }) {
       // Replace this with your actual query function
       const queryStatus = () => {
         // Return a random status for the sake of this example
-        const statuses = ['This Elevator is now: Active', 'This Elevator is now: Inactive'];
+        const statuses = ['Inactive'];
         return statuses[Math.floor(Math.random() * statuses.length)];
       };
       const currentStatus = queryStatus();
@@ -53,32 +53,60 @@ function StatusScreen({ route }) {
   };
 
   return (
-    <View>
-      {/* Display the current status of the elevator */}
+    <View style={styles.container}>
       {currentStatus === 'Active' ? (
-        <Text style={{ color: 'green', fontSize: 25, fontWeight: 'bold' }}>
+        <Text style={[styles.statusText, styles.activeStatusText]}>
           {currentStatus}
         </Text>
       ) : (
-        <Text style={{ color: 'red', fontSize: 25, fontWeight: 'bold' }}>
+        <Text style={[styles.statusText, styles.inactiveStatusText]}>
           {currentStatus}
         </Text>
       )}
 
       {/* Show the "End Task" button if the status is not "Active" */}
       {showEndTaskButton && (
-        <Button title="End Task" onPress={updateStatus} />
+        <Button title="End Task" onPress={updateStatus} style={styles.button} />
       )}
 
-      {/* Show the "Go Back" button if the status was updated to "Active" */}
-      {showGoBackButton && (
+     
         <Button
           title="Go Back"
           onPress={() => navigation.goBack()}
+          style={styles.button}
         />
-      )}
+        
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statusText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  activeStatusText: {
+    color: 'green',
+  },
+  inactiveStatusText: {
+    color: 'red',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: 'blue',
+    borderRadius: 5,
+  },
+});
+
 
 export default StatusScreen;
