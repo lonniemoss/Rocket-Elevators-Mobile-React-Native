@@ -2,56 +2,133 @@ import React, { useState, useEffect} from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
+import { FlatList, TouchableOpacity } from 'react-native';
+
 
 function Homescreen () {
     const navigation = useNavigation();
 
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const inactElevatorsURL = "http://localhost:7262/api/Elevator/status"
+    const [data, setData] = useState([
+        {
+            "id": 5,
+            "status": "Inactive",
+            "column_id": 5,
+            "column": null
+        },
+        {
+            "id": 6,
+            "status": "Inactive",
+            "column_id": 6,
+            "column": null
+        },
+        {
+            "id": 7,
+            "status": "Inactive",
+            "column_id": 7,
+            "column": null
+        },
+        {
+            "id": 9,
+            "status": "Inactive",
+            "column_id": 9,
+            "column": null
+        },
+        {
+            "id": 10,
+            "status": "Inactive",
+            "column_id": 10,
+            "column": null
+        },
+        {
+            "id": 12,
+            "status": "Inactive",
+            "column_id": 12,
+            "column": null
+        },
+        {
+            "id": 14,
+            "status": "Inactive",
+            "column_id": 14,
+            "column": null
+        },
+        {
+            "id": 16,
+            "status": "Inactive",
+            "column_id": 16,
+            "column": null
+        },
+        {
+            "id": 17,
+            "status": "Inactive",
+            "column_id": 17,
+            "column": null
+        },
+        {
+            "id": 18,
+            "status": "Inactive",
+            "column_id": 18,
+            "column": null
+        },
+        {
+            "id": 19,
+            "status": "Inactive",
+            "column_id": 19,
+            "column": null
+        },
+        {
+            "id": 21,
+            "status": "Inactive",
+            "column_id": 21,
+            "column": null
+        },
+        {
+            "id": 24,
+            "status": "Inactive",
+            "column_id": 24,
+            "column": null
+        }
+    ])
+        console.log(data)
+    // const [loading, setLoading] = useState(true)
+    // const inactElevatorsURL = "https://172.31.98.61:7262/api/Elevator/status"
 
-    useEffect(() => {
-        fetch(inactElevatorsURL)
-        .then((response)=>response.json())
-        .then((json)=>setData(json))
-        .catch((error)=>console.error(error))
-        .finally(()=>setLoading(false))
 
-    },[])
-    
+    // useEffect(() => {
+    //     fetch(inactElevatorsURL)
+    //     .then((response)=>response.json())
+    //     .then((json)=>setData(json))
+    //     .catch((error)=>console.error(error))
+    //     .finally(()=>setLoading(false))
+
+    // },[])
+
     let updateStatus = async (id) => {
-        await fetch(`https://rocketelevators-api.azurewebsites.net/api/Elevator/${id}/Active`, {
+        await fetch(`https://172.31.98.61:7262/api/Elevator/status`, {
             method: "PUT"
         })
     }
-    const handleOnPress = (id) => {
-            updateStatus(id);
-            alert("Elevator status updated");
-    }
+
+    const handleOnPress = (id, status) => {
+        updateStatus(id);
+        navigation.navigate('Status', { id, status });
+        alert('Elevator status updated');
+    };
+      
 
     return (
-        <View style={styles.container}>
-            <View style={styles.Middle}>
-            <Text style={styles.welcomeText}>Elevator actual status</Text>
-            </View>
-            {
-                loading ?( <Text>Loading...</Text>) : (
-                    data.map((get)=> (
-                        <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
-                          <Text style={{fontSize:25, fontWeight:"bold"}}>Elevator: {get.id}</Text>
-                          <Text style={{fontSize:25, fontWeight:"bold"}}>{get.model}</Text> 
-                          <Text style={{fontSize:25, fontWeight:"bold"}}>{get.serialNumber}</Text>
-                          <Button onPress={handleOnPress(get.id, get.status)} style={{fontSize:20, color:"red"}}title={get.status}/>
-                        </View>
-                    ))
-                )
-            }
-            <View style={styles.Middle}>
-                <View style={styles.logoutButton}>
-            <Button onPress={() => navigation.navigate("Login")} title="Logout" />
-                </View>                          
-            </View>
-        </View>       
+        <FlatList 
+            data={data} 
+            renderItem={({item}) => (
+                <TouchableOpacity
+                onPress={() => handleOnPress(item.id, item.status)}
+                >
+                    <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{item.id}</Text>
+                    <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{item.status}</Text>
+                </TouchableOpacity>
+
+            )} 
+            keyExtractor={item => item.id.toString()} 
+        />
     );
 };
 
@@ -82,5 +159,4 @@ const styles= StyleSheet.create({
         marginLeft:15,
         marginRight:15,
     }
-
 })
