@@ -9,7 +9,8 @@ const StatusStack = createStackNavigator();
 
 function Status({ route }) {
   const navigation = useNavigation();
-  const { id, status } = route.params;
+  const id = route.params?.id;
+  const status = route.params?.status;
 
   // Declare a state variable to hold the current status of the elevator
   const [currentStatus, setCurrentStatus] = useState(status);

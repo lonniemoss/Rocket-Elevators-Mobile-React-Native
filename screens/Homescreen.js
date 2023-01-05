@@ -103,7 +103,7 @@ function Homescreen () {
     // },[])
 
     let updateStatus = async (id) => {
-        await fetch(`https://172.31.98.61:7262/api/Elevator/status`, {
+        await fetch(`https://6e4d-173-246-74-146.ngrok.io/api/Elevator/5/active/`, {
             method: "PUT"
         })
     }
@@ -113,7 +113,6 @@ function Homescreen () {
         navigation.navigate('Status', { id, status });
         alert('Elevator status updated');
     };
-      
 
     return (
         <FlatList 
