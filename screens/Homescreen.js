@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, TouchableOpacity } from 'react-native';
+import Status from './Status';
 
 
 function Homescreen () {

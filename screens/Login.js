@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Input, NativeBaseProvider, Button, Icon } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Status from './Status';
 
 function Login() {
     const navigation = useNavigation();

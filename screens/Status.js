@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const StatusStack = createStackNavigator();
 
-function Status({ route }) {
+function StatusScreen({ route }) {
   const navigation = useNavigation();
   const id = route.params?.id;
   const status = route.params?.status;
@@ -22,9 +22,9 @@ function Status({ route }) {
       // Replace this with your actual query function
       const queryStatus = () => {
         // Return a random status for the sake of this example
-        const statuses = ['Active', 'Inactive', 'Maintenance'];
+        const statuses = ['This Elevator is now: Active', 'This Elevator is now: Inactive'];
         return statuses[Math.floor(Math.random() * statuses.length)];
-      }
+      };
       const currentStatus = queryStatus();
       setCurrentStatus(currentStatus);
     }, 5000);
@@ -32,8 +32,29 @@ function Status({ route }) {
     return () => clearInterval(interval);
   }, []);
 
+  // Declare a state variable to hold the visibility of the "End Task" button
+  const [showEndTaskButton, setShowEndTaskButton] = useState(status !== 'Active');
+
+  // Declare a state variable to hold the visibility of the "Go Back" button
+  const [showGoBackButton, setShowGoBackButton] = useState(false);
+
+  // Function to update the status of the elevator to "Active"
+  const updateStatus = async () => {
+    // Make a request to update the status of the elevator
+    // Replace this with your actual update function
+    const updateElevatorStatus = async () => {
+      return 'Active';
+    };
+    const updatedStatus = await updateElevatorStatus();
+    setCurrentStatus(updatedStatus);
+
+    // Show the "Go Back" button if the status was successfully updated
+    setShowGoBackButton(updatedStatus === 'Active');
+  };
+
   return (
     <View>
+      {/* Display the current status of the elevator */}
       {currentStatus === 'Active' ? (
         <Text style={{ color: 'green', fontSize: 25, fontWeight: 'bold' }}>
           {currentStatus}
@@ -43,38 +64,21 @@ function Status({ route }) {
           {currentStatus}
         </Text>
       )}
+
+      {/* Show the "End Task" button if the status is not "Active" */}
+      {showEndTaskButton && (
+        <Button title="End Task" onPress={updateStatus} />
+      )}
+
+      {/* Show the "Go Back" button if the status was updated to "Active" */}
+      {showGoBackButton && (
+        <Button
+          title="Go Back"
+          onPress={() => navigation.goBack()}
+        />
+      )}
     </View>
   );
 }
 
-
-export default function App() {
-  return (
-    <NativeBaseProvider>
-      <StatusStack.Navigator>
-        <StatusStack.Screen name="Status" component={Status} />
-      </StatusStack.Navigator>
-    </NativeBaseProvider>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  statusText: {
-    marginTop: 100,
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  Middle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoutButton: {
-    marginTop: 30,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-});
+export default StatusScreen;
