@@ -9,7 +9,7 @@
 
 # Available Scripts
 
-1. You need to run this project https://github.com/lonniemoss/Rocket_Elevators_API with the cmd line "dotnet run", first. Make sure you have all the neccessary dependencies.
+1. You need to run this project https://github.com/lonniemoss/Rocket_Elevators_API with the cmd line "dotnet run", first, to run the api. Make sure you have all the neccessary dependencies.
 
 2. In this project, with the cmd line "npx expo start", you can start following the instruction and be able to see the mobile app.
 
